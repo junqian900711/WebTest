@@ -1,10 +1,12 @@
 """"
 from selenium import webdriver
-#this is the driver for the firefox
+
 browser = webdriver.Firefox()
 browser.get('http://betastore.carloudy.com')
 browser.maximize_window()
+
 #browser.find_element_by_name()
+
 may not use this next time
 """
 
