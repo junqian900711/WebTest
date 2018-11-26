@@ -22,4 +22,4 @@ browser.find_element_by_name("password").send_keys("1019042603QJ")
 browser.find_element_by_xpath("//button[text()='Log in']").click()
 
 #that is for today
-#today is 11/26/2018-1
+#today is 11/26/2018-1-1
