@@ -21,6 +21,4 @@ browser.find_element_by_name("username").send_keys("junqianniub")
 browser.find_element_by_name("password").send_keys("1019042603QJ")
 browser.find_element_by_xpath("//button[text()='Log in']").click()
 
-print("down")
-
 #that is for today
