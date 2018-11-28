@@ -84,6 +84,11 @@ browser.find_element_by_id("json-tab").click()
 
 #browser.get(url_image)
 #browser.get("http://www.google.com")
+#https://www.zhihu.com/question/43604232
+#https://stackoverrun.com/cn/q/13100729
+browser.get('https://www.baidu.com/')
+element = browser.find_element_by_id('su')
+element.send_keys(Keys.CONTROL,"T")
 
 """
 方法二
