@@ -90,6 +90,12 @@ browser.get('https://www.baidu.com/')
 element = browser.find_element_by_id('su')
 element.send_keys(Keys.CONTROL,"T")
 
+
+url = "http://www.baidu.com"
+js_1 = 'window.open("'+ url + '");'
+browser.execute_script(js_1)
+print("js_1 is :",js_1)
+
 """
 方法二
 json_elements = json.dumps(data)
