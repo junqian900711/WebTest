@@ -15,22 +15,22 @@ from selenium.webdriver.common.keys import Keys
 import requests
 import json
 
-
+'''
 #这段代码是用Chrome对网站进行测试
 browser = webdriver.Chrome()
 #browser = webdriver.Firefox()
+browser.implicitly_wait(30)  # 隐性等待，最长等30秒
 browser.get("http://betastore.carloudy.com")
 browser.maximize_window()
 
 browser.find_element_by_name("username").send_keys("junqianniub")
 browser.find_element_by_name("password").send_keys("1019042603QJ")
 browser.find_element_by_xpath("//button[text()='Log in']").click()
-
 print(browser.current_window_handle)
 
-time.sleep(5)
+time.sleep(2)
 browser.close()
-
+'''
 
 
 #一下代码是对API 进行测试
@@ -39,12 +39,56 @@ https://gist.github.com/lrhache/7686903 from 洪磊
 从上述的Chrome 更换到 Firefox 进行API测试，上面的link 是用来
 https://my.oschina.net/u/3204996/blog/1796460
 """
+
 browser = webdriver.Firefox()
 browser.maximize_window()
 browser.get("http://betastore.carloudy.com/approved/?os=android")
+url_1 = "http://betastore.carloudy.com/approved/?os=android"
+webdata = requests.get(url_1).text
+print("The webdata is {}:".format(webdata))
+data_1 = json.loads(webdata)
+print("The data_1 is {}:".format(data_1))
+#dictionary_1 = data_1[5]
+length_data_1 = len(data_1)
+#dictionary_1 = [length_data_1+1]
+dictionary_1= []
+'''
+for i in range(length_data_1):
+    #print(data_1[i])
+    dictionary_1.append(data_1[i])
+'''
+for i in range(length_data_1):
+    dictionary_1.append(data_1[i]["RegisterAppIcon"])
+print(dictionary_1)
+
+for i in range(length_data_1):
+    js_1 = 'window.open("'+ dictionary_1[i] + '");'
+    browser.execute_script(js_1)
+    time.sleep(2)
+    try:
+        text_from_web = browser.find_element_by_id("info").get_attribute("textContent")
+
+        if text_from_web:
+            flag = False
+        else:
+            flag = True
+        if flag:
+            image = True
+            if image == True:
+                print("In the first API, the number is {}, and the link is {}:".format(i, data_1[i]))
+                print("The image didn't load success")
+                time.sleep(2)
+            else:
+                print("The image didn't load success")
+                time.sleep(2)
+    except Exception as e:
+        print(e)
+
+
 print("first one success")
 time.sleep(2)
 
+'''
 js='window.open("http://betastore.carloudy.com/approved/?os=ios");'
 browser.execute_script(js)
 time.sleep(2)
@@ -55,12 +99,10 @@ browser.execute_script(js)
 time.sleep(2)
 print("third one success")
 
-
 js='window.open("http://betastore.carloudy.com/jsons/?appid=92e4r05x");'
 browser.execute_script(js)
 time.sleep(2)
 print("forth one success")
-
 #for link in browser.find_elements_by_tag_name("a"): 这一段还没有很明白
    # if link.text!="":
    #     print(link.text + "")
@@ -68,10 +110,11 @@ print("forth one success")
    #     print("Not named: ")
    # print(link.get_attribute("http"))
 #print(browser.find_element_by_tag_name("a"))
-wedata = requests.get("http://betastore.carloudy.com/jsons/?appid=92e4r05x").text
-print(wedata)
+webdata_4 = requests.get("http://betastore.carloudy.com/jsons/?appid=92e4r05x").text
+print(webdata_4)
+print(type(webdata_4))
 #request 自带了json的功能
-data = json.loads(wedata)
+data = json.loads(webdata_4)
 print(data)
 print(type(data))
 #url_image=data[0]["files"] 的作用与 url_image=data[0].get("files")一样
@@ -79,22 +122,19 @@ print(type(data))
 #https://www.cnblogs.com/wzjbg/p/6507497.html   要比较下与方法二之间的区别，方法二是错误的
 url_image=data[0].get("files")
 print(url_image)
-
-browser.find_element_by_id("json-tab").click()
+# 此处是对现有的url进行open new page
+js_4 = 'window.open("'+ url_image + '");'
+browser.execute_script(js_4)
+print("js_4 is :",js_4)
+print(browser.current_url)
 
 #browser.get(url_image)
 #browser.get("http://www.google.com")
-#https://www.zhihu.com/question/43604232
+#https://www.zhihu.com/ques`tion/43604232
 #https://stackoverrun.com/cn/q/13100729
-browser.get('https://www.baidu.com/')
-element = browser.find_element_by_id('su')
-element.send_keys(Keys.CONTROL,"T")
+'''
 
 
-url = "http://www.baidu.com"
-js_1 = 'window.open("'+ url + '");'
-browser.execute_script(js_1)
-print("js_1 is :",js_1)
 
 """
 方法二
