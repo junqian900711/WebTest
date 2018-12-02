@@ -7,7 +7,7 @@ from selenium.webdriver.common.keys import Keys
 
 driver = webdriver.Firefox()
 #driver = webdriver.Chrome()
-driver.get('http://betastore.carloudy.com/media/documents/v9onh5o8/appIcon.png')
+driver.get('http://betastore.carloudy.com/media/')
 #driver.get('http://sahitest.com/demo/index.htm')
 print(driver.current_window_handle)  # 查看当前window handle
 """
@@ -32,10 +32,11 @@ actions.perform()
 #driver.refresh()
 # 关闭标签页
 #ActionChains(driver).key_down(Keys.CONTROL).send_keys("w").key_up(Keys.CONTROL).perform()
-'''
+
 text_from_web = driver.find_element_by_id("info").get_attribute("textContent")
+#text_from_web = driver.find_elements_by_xpath("//div[@id='info']/p/text()")
 print(text_from_web)
 
-'''
+
 #driver.close()
 print(driver.window_handles) # 查看现在的所有window handles

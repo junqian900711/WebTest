@@ -29,8 +29,7 @@ time.sleep(2)
 browser.close()
 '''
 
-
-#一下代码是对API 进行测试
+# 一下代码是对API 进行测试
 """
 https://gist.github.com/lrhache/7686903 from 洪磊
 从上述的Chrome 更换到 Firefox 进行API测试，上面的link 是用来
@@ -42,41 +41,62 @@ browser.maximize_window()
 browser.get("http://betastore.carloudy.com/approved/?os=android")
 url_1 = "http://betastore.carloudy.com/approved/?os=android"
 webdata = requests.get(url_1).text
-print("The webdata is {}:".format(webdata))
+# print("The webdata is {}:".format(webdata))
 data_1 = json.loads(webdata)
-print("The data_1 is {}:".format(data_1))
-#dictionary_1 = data_1[5]
+# print("The data_1 is {}:".format(data_1))
 length_data_1 = len(data_1)
-#dictionary_1 = [length_data_1+1]
-dictionary_1= []
+# dictionary_1 = [length_data_1+1]
+dictionary_1 = []
+
+
 '''
 for i in range(length_data_1):
     #print(data_1[i])
     dictionary_1.append(data_1[i])
 '''
 for i in range(length_data_1):
-    dictionary_1.append(data_1[i]["RegisterAppIcon"])
+    dictionary_1.append(data_1[i]["RegisterAppIcon"])  # 这里不能用dictionary_1[i] = length_data_1[i]这个方法,liso[0]不能用
 print(dictionary_1)
 
 for i in range(length_data_1):
-    js_1 = 'window.open("'+ dictionary_1[i] + '");'
+    js_1 = 'window.open("' + dictionary_1[i] + '");'
     browser.execute_script(js_1)
     time.sleep(2)
+   # browser._switch_to.window(browser.current_window_handle[i])
     try:
-        text_from_web = browser.find_element_by_id("info").get_attribute("textContent")
+        # text_from_web = browser.find_element_by_id("info").get_attribute("textContent")
+        # print(text_from_web)
+        print("current url is :", dictionary_1[i])
+        #text_from_web = browser.find_elements_by_xpath("//div[@id='info']")
+        #text_from_web = browser.find_element_by_id("info").get_attribute("textContent")
+        text_from_web = browser.find_elements_by_xpath("/html/body/div[2]/p")
+        print(text_from_web)
+
         if text_from_web:
-            flag = False
+
+            #print(browser.find_element_by_id("info").get_attribute("textContent"))
+            print("The image didn't load success")
+            time.sleep(2)
+
+        # image = False
         else:
-            flag = True
-        if flag:
-            image = True
-            if image == True:
-                print("In the first API, the number is {}, and the link is {}:".format(i, data_1[i]))
+            print("In the first API, the image I am print now is {}, and the link is {}:".format(i, data_1[i]))
+            print("The image load success")
+            time.sleep(2)
+
+            # image = True
+            """
+            if flag:
+                #if image == True:
+                print("In the first API, the image I am print now is {}, and the link is {}:".format(i, data_1[i]))
                 print("The image didn't load success")
                 time.sleep(2)
+                flag = False
             else:
                 print("The image didn't load success")
                 time.sleep(2)
+                flag = False
+            """
     except Exception as e:
         print(e)
 
@@ -129,7 +149,6 @@ print(browser.current_url)
 #https://stackoverrun.com/cn/q/13100729
 '''
 
-
 """
 方法二
 json_elements = json.dumps(data)
@@ -140,14 +159,3 @@ print("Dictionary is :",diction)
 image_url = diction["files"]
 print(image_url)
 """
-
-
-
-
-
-
-
-
-
-
-
