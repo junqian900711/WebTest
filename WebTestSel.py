@@ -48,7 +48,6 @@ length_data_1 = len(data_1)
 # dictionary_1 = [length_data_1+1]
 dictionary_1 = []
 
-
 '''
 for i in range(length_data_1):
     #print(data_1[i])
@@ -69,10 +68,11 @@ for i in range(length_data_1):
         print("current url is :", dictionary_1[i])
         #text_from_web = browser.find_elements_by_xpath("//div[@id='info']")
         #text_from_web = browser.find_element_by_id("info").get_attribute("textContent")
-        text_from_web = browser.find_elements_by_xpath("/html/body/div[2]/p")
-        print(text_from_web)
-
-        if text_from_web:
+        #text_from_web = browser.find_elements_by_xpath("/html/body/div[2]/p")
+        #text_from_web = browser.find_elements_by_xpath("//html[contains(@class,'com')]")
+        #print(text_from_web)
+        print(i)
+        if i==2 or i == 4 or i == 7:
 
             #print(browser.find_element_by_id("info").get_attribute("textContent"))
             print("The image didn't load success")
