@@ -78,7 +78,7 @@ for i in range(length_data_1):
             print("The image didn't load success")
             time.sleep(2)
 
-        # image = False
+            # image = False
         else:
             print("In the first API, the image I am print now is {}, and the link is {}:".format(i, data_1[i]))
             print("The image load success")
