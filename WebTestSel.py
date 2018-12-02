@@ -64,7 +64,6 @@ for i in range(length_data_1):
     time.sleep(2)
     try:
         text_from_web = browser.find_element_by_id("info").get_attribute("textContent")
-
         if text_from_web:
             flag = False
         else:
@@ -80,7 +79,6 @@ for i in range(length_data_1):
                 time.sleep(2)
     except Exception as e:
         print(e)
-
 
 print("first one success")
 time.sleep(2)
@@ -130,7 +128,6 @@ print(browser.current_url)
 #https://www.zhihu.com/ques`tion/43604232
 #https://stackoverrun.com/cn/q/13100729
 '''
-
 
 
 """
