@@ -5,14 +5,19 @@ browser.get('http://betastore.carloudy.com')
 browser.maximize_window()
 #browser.find_element_by_name()
 may not use this next time
+
+https://github.com/intypython/seleniumDemo/commits/newBranch
+https://www.zhihu.com/question/19660572
+https://github.com/ccapton/brook-web
 """
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import requests
 import json
+from selenium.webdriver.support.select import Select
 
-'''
+
 #这段代码是用Chrome对网站进行测试
 browser = webdriver.Chrome()
 #browser = webdriver.Firefox()
@@ -23,13 +28,35 @@ browser.maximize_window()
 browser.find_element_by_name("username").send_keys("junqianniub")
 browser.find_element_by_name("password").send_keys("1019042603QJ")
 browser.find_element_by_xpath("//button[text()='Log in']").click()
-print(browser.current_window_handle)
+
+system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputState']"))
+system_type.select_by_value("iOS")
+#system_type.select_by_value("Android")
+file_path_ios = r'C:\Users\qianj\Desktop\1.png'
+browser.find_element_by_name("RegisterAppName").send_keys("Test iOS 1")
+uploade_icon = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
+uploade_icon.send_keys(file_path_ios)
+browser.find_element_by_name("RegisterPackageName").send_keys("Test iOS Package Name 1")
+browser.find_element_by_name("RegisterAppDescription").send_keys("Test iOS App description 1")
+browser.find_element_by_xpath("/html/body//main/div[2]/form[@method='post']//button[@type='submit']").click()
+
+system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputState']"))
+system_type.select_by_value("Android")
+#system_type.select_by_value("Android")
+file_path_Android = r'C:\Users\qianj\Desktop\2.png'
+browser.find_element_by_name("RegisterAppName").send_keys("Test Android 1")
+uploade_icon = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
+uploade_icon.send_keys(file_path_Android)
+browser.find_element_by_name("RegisterPackageName").send_keys("Test Android Package Name 1")
+browser.find_element_by_name("RegisterAppDescription").send_keys("Test Android App description 1")
+browser.find_element_by_xpath("/html/body//main/div[2]/form[@method='post']//button[@type='submit']").click()
+
 
 time.sleep(2)
-browser.close()
-'''
+#browser.close()
 
-# 一下代码是对API 进行测试
+
+# 以下代码是对API 进行测试
 """
 https://gist.github.com/lrhache/7686903 from 洪磊
 从上述的Chrome 更换到 Firefox 进行API测试，上面的link 是用来
@@ -60,45 +87,26 @@ print(dictionary_1)
 for i in range(length_data_1):
     js_1 = 'window.open("' + dictionary_1[i] + '");'
     browser.execute_script(js_1)
-    time.sleep(2)
-   # browser._switch_to.window(browser.current_window_handle[i])
+    #time.sleep(2)
+    r = requests.get(dictionary_1[i])
+    #https://www.jianshu.com/p/ada99b7880a6    这是request 的解释
+    #print(type(r)) #<class 'requests.models.Response'>
+    print("Right now the nummber is {}, and the status code is {}!!!!".format(i,r.status_code))
+    if r.status_code == 200:
+        print("In the first API, the image I am print now is {}, and the link is {}:".format(i, data_1[i]))
+        print("The image load success\n")
+        time.sleep(2)
+    else:
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nThe image didn't load success")
+        print("In the first API, the image I am print now is {}, and the link is {}:\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n".format(i, data_1[i]))
+        time.sleep(2)
+
+    """
+    try - catch的基本使用方法 
     try:
-        # text_from_web = browser.find_element_by_id("info").get_attribute("textContent")
-        # print(text_from_web)
-        print("current url is :", dictionary_1[i])
-        #text_from_web = browser.find_elements_by_xpath("//div[@id='info']")
-        #text_from_web = browser.find_element_by_id("info").get_attribute("textContent")
-        #text_from_web = browser.find_elements_by_xpath("/html/body/div[2]/p")
-        #text_from_web = browser.find_elements_by_xpath("//html[contains(@class,'com')]")
-        #print(text_from_web)
-        print(i)
-        if i==2 or i == 4 or i == 7:
-
-            #print(browser.find_element_by_id("info").get_attribute("textContent"))
-            print("The image didn't load success")
-            time.sleep(2)
-
-            # image = False
-        else:
-            print("In the first API, the image I am print now is {}, and the link is {}:".format(i, data_1[i]))
-            print("The image load success")
-            time.sleep(2)
-
-            # image = True
-            """
-            if flag:
-                #if image == True:
-                print("In the first API, the image I am print now is {}, and the link is {}:".format(i, data_1[i]))
-                print("The image didn't load success")
-                time.sleep(2)
-                flag = False
-            else:
-                print("The image didn't load success")
-                time.sleep(2)
-                flag = False
-            """
     except Exception as e:
         print(e)
+    """
 
 print("first one success")
 time.sleep(2)
@@ -159,3 +167,5 @@ print("Dictionary is :",diction)
 image_url = diction["files"]
 print(image_url)
 """
+
+
