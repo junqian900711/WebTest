@@ -1,14 +1,9 @@
 """
-from selenium import webdriver
-browser = webdriver.Firefox()
-browser.get('http://betastore.carloudy.com')
-browser.maximize_window()
-#browser.find_element_by_name()
-may not use this next time
-
 https://github.com/intypython/seleniumDemo/commits/newBranch
 https://www.zhihu.com/question/19660572
 https://github.com/ccapton/brook-web
+https://www.zhihu.com/question/20039623/answer/167106822
+https://zhuanlan.zhihu.com/p/28587931
 """
 import time
 from selenium import webdriver
@@ -16,45 +11,137 @@ from selenium.webdriver.common.keys import Keys
 import requests
 import json
 from selenium.webdriver.support.select import Select
+import os
+import os.path
+from selenium.webdriver.common.alert import Alert
 
-
-#这段代码是用Chrome对网站进行测试
+# 这段代码是用Chrome对网站进行测试
 browser = webdriver.Chrome()
-#browser = webdriver.Firefox()
+# browser = webdriver.Firefox()
 browser.implicitly_wait(30)  # 隐性等待，最长等30秒
 browser.get("http://betastore.carloudy.com")
 browser.maximize_window()
 
 browser.find_element_by_name("username").send_keys("junqianniub")
 browser.find_element_by_name("password").send_keys("1019042603QJ")
+#time.sleep(2)
 browser.find_element_by_xpath("//button[text()='Log in']").click()
+
 
 system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputState']"))
 system_type.select_by_value("iOS")
-#system_type.select_by_value("Android")
-file_path_ios = r'C:\Users\qianj\Desktop\1.png'
+# system_type.select_by_value("Android")
+#file_path_ios = r'C:/Users\qianj\Desktop\1.png'
+file_path_ios = os.path.realpath('image/1.png') #link for OS 操作: https://blog.csdn.net/xiongchengluo1129/article/details/79181246
+#print(file_path_ios)
 browser.find_element_by_name("RegisterAppName").send_keys("Test iOS 1")
-uploade_icon = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
-uploade_icon.send_keys(file_path_ios)
+uploade_icon_ios_path = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
+uploade_icon_ios_path.send_keys(file_path_ios)
 browser.find_element_by_name("RegisterPackageName").send_keys("Test iOS Package Name 1")
 browser.find_element_by_name("RegisterAppDescription").send_keys("Test iOS App description 1")
 browser.find_element_by_xpath("/html/body//main/div[2]/form[@method='post']//button[@type='submit']").click()
+#time.sleep(3)
+
 
 system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputState']"))
 system_type.select_by_value("Android")
 #system_type.select_by_value("Android")
-file_path_Android = r'C:\Users\qianj\Desktop\2.png'
+#file_path_Android = r'C:/Users\qianj\Desktop\2.png' #https://blog.csdn.net/caibaoH/article/details/78335094  uncommon 之后要把/改成\才能继续使用，为了能够成功uncommon
+file_path_Android = os.path.realpath('image/2.png')
 browser.find_element_by_name("RegisterAppName").send_keys("Test Android 1")
-uploade_icon = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
-uploade_icon.send_keys(file_path_Android)
+uploade_icon_Android_path = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
+uploade_icon_Android_path.send_keys(file_path_Android)
 browser.find_element_by_name("RegisterPackageName").send_keys("Test Android Package Name 1")
 browser.find_element_by_name("RegisterAppDescription").send_keys("Test Android App description 1")
 browser.find_element_by_xpath("/html/body//main/div[2]/form[@method='post']//button[@type='submit']").click()
+#time.sleep(3)
 
-
+#image using jpg
+file_path_jpg = os.path.realpath('image/3.jpg')
+uploade_icon_jpg = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
+uploade_icon_jpg.send_keys(file_path_jpg)
 time.sleep(2)
-#browser.close()
+#下面两种Alert的使用方法，分别是：
+#https://huilansame.github.io/huilansame.github.io/archivers/switch-to-alert-window-div
+#https://blog.csdn.net/chenjuan0530/article/details/79553157
+#browser.switch_to.alert.accept()
+Alert(browser).accept()
+time.sleep(2)
 
+#image over 50KB
+file_path_over = os.path.realpath('image/over50.png')
+uploade_icon_over50 = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
+uploade_icon_over50.send_keys(file_path_over)
+time.sleep(2)
+browser.switch_to.alert.accept()
+
+# 测试点击edit 然后back 功能,再forward 并且测试cancel的功能
+browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[4]/td[7]/form[@action='/editappinfo']//button[@name='editappinfo']").click()
+time.sleep(2)
+browser.back()
+time.sleep(2)
+browser.forward()
+time.sleep(1)
+browser.find_element_by_xpath("/html/body//div[@role='alert']/form[@action='/updateedit']/div/div[6]/button[1]").click() #cancel
+print("Cancel Successfull")
+time.sleep(2)
+
+#再次点击目的更换图片并且完成更新功能,并且系统从iOS改成了Android
+browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[4]/td[7]/form[@action='/editappinfo']//button[@name='editappinfo']").click()#click edit
+system_type_update_1 = Select(browser.find_element_by_name("OperatingSystem")) #choose operation system
+system_type_update_1.select_by_value("Android") #select
+uploade_icon_update_path_1 = browser.find_element_by_xpath("//input[@id='exampleFormControlFile4']") #select the image
+file_path_update_1 = os.path.realpath('image/4.png')
+uploade_icon_update_path_1.send_keys(file_path_update_1) #upload image
+browser.find_element_by_name("RegisterAppName").clear()  #对之前的文本清理以及输入新的文本
+browser.find_element_by_name("RegisterAppName").send_keys("iOS Transfer to Test Android 1")
+browser.find_element_by_name("RegisterPackageName").clear()
+browser.find_element_by_name("RegisterPackageName").send_keys("iOS to Android Test1")
+browser.find_element_by_name("RegisterAppDescription").clear()
+browser.find_element_by_name("RegisterAppDescription").send_keys("iOS to Android Test1 description 1")
+time.sleep(2)
+browser.find_element_by_xpath("/html/body//div[@role='alert']/form[@action='/updateedit']/div/div[6]/button[2]").click()
+#browser.find_element_by_name("updateedit").click()
+
+#Android update transfer to iOS
+browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[5]/td[7]/form[@action='/editappinfo']//button[@name='editappinfo']").click()
+system_type_update_2 = Select(browser.find_element_by_name("OperatingSystem"))
+system_type_update_2.select_by_value("iOS")
+uploade_icon_update_path_2 = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile4']")
+file_path_update_2 = os.path.realpath('image/5.png')
+uploade_icon_update_path_2.send_keys(file_path_update_2)
+browser.find_element_by_name("RegisterAppName").clear()  #对之前的文本清理以及输入新的文本
+browser.find_element_by_name("RegisterAppName").send_keys("Android Transfer to Test iOS 1")
+browser.find_element_by_name("RegisterPackageName").clear()
+browser.find_element_by_name("RegisterPackageName").send_keys("Android to iOS Test1")
+browser.find_element_by_name("RegisterAppDescription").clear()
+browser.find_element_by_name("RegisterAppDescription").send_keys("Android to iOS Test1 description 1")
+time.sleep(2)
+browser.find_element_by_xpath("/html/body//div[@role='alert']/form[@action='/updateedit']/div/div[6]/button[2]").click()
+
+#删除之前注册的iOS 和 Android App
+browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[4]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()
+#time.sleep(5)
+Alert(browser).dismiss()
+print("I have already dismiss")
+browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[4]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()
+#time.sleep(5)
+browser.switch_to.alert.accept()
+print("Delete success")
+
+#browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[5]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()
+browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[4]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()
+Alert(browser).accept()
+print("Second delete success")
+#time.sleep(5)
+
+#upload file
+browser.find_element_by_xpath("//body//main/div[3]/a[@href='/details']/button[@type='button']").click()
+system_type_update_2 = Select(browser.find_element_by_name("AppName"))
+system_type_update_2.select_by_index(1)
+print("done")
+browser.back()
+browser.close()
 
 # 以下代码是对API 进行测试
 """
@@ -63,6 +150,7 @@ https://gist.github.com/lrhache/7686903 from 洪磊
 https://my.oschina.net/u/3204996/blog/1796460
 """
 
+"""
 browser = webdriver.Firefox()
 browser.maximize_window()
 browser.get("http://betastore.carloudy.com/approved/?os=android")
@@ -101,17 +189,17 @@ for i in range(length_data_1):
         print("In the first API, the image I am print now is {}, and the link is {}:\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n".format(i, data_1[i]))
         time.sleep(2)
 
-    """
-    try - catch的基本使用方法 
-    try:
-    except Exception as e:
-        print(e)
-    """
+  
+    #try - catch的基本使用方法 
+    #try:
+    #except Exception as e:
+     #   print(e)
+   
 
 print("first one success")
 time.sleep(2)
 
-'''
+
 js='window.open("http://betastore.carloudy.com/approved/?os=ios");'
 browser.execute_script(js)
 time.sleep(2)
@@ -155,7 +243,8 @@ print(browser.current_url)
 #browser.get("http://www.google.com")
 #https://www.zhihu.com/ques`tion/43604232
 #https://stackoverrun.com/cn/q/13100729
-'''
+"""
+
 
 """
 方法二
@@ -167,5 +256,3 @@ print("Dictionary is :",diction)
 image_url = diction["files"]
 print(image_url)
 """
-
-
