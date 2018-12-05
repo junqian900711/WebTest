@@ -4,6 +4,8 @@ https://www.zhihu.com/question/19660572
 https://github.com/ccapton/brook-web
 https://www.zhihu.com/question/20039623/answer/167106822
 https://zhuanlan.zhihu.com/p/28587931
+https://www.boxuegu.com/course/free/    13861712384
+https://ke.qq.com/course/134017
 """
 import time
 from selenium import webdriver
@@ -42,6 +44,20 @@ browser.find_element_by_name("RegisterAppDescription").send_keys("Test iOS App d
 browser.find_element_by_xpath("/html/body//main/div[2]/form[@method='post']//button[@type='submit']").click()
 #time.sleep(3)
 
+#测试如果同样的app name 注册两次会出现一个alert，测试出现并点击接受
+system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputState']"))
+system_type.select_by_value("iOS")
+file_path_ios = os.path.realpath('image/1.png') #link for OS 操作: https://blog.csdn.net/xiongchengluo1129/article/details/79181246
+#print(file_path_ios)
+browser.find_element_by_name("RegisterAppName").send_keys("Test iOS 1")
+uploade_icon_ios_path = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
+uploade_icon_ios_path.send_keys(file_path_ios)
+browser.find_element_by_name("RegisterPackageName").send_keys("Test iOS Package Name 1")
+browser.find_element_by_name("RegisterAppDescription").send_keys("Test iOS App description 1")
+browser.find_element_by_xpath("/html/body//main/div[2]/form[@method='post']//button[@type='submit']").click()
+time.sleep(3)
+Alert(browser).accept()
+time.sleep(2)
 
 system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputState']"))
 system_type.select_by_value("Android")
@@ -55,6 +71,20 @@ browser.find_element_by_name("RegisterPackageName").send_keys("Test Android Pack
 browser.find_element_by_name("RegisterAppDescription").send_keys("Test Android App description 1")
 browser.find_element_by_xpath("/html/body//main/div[2]/form[@method='post']//button[@type='submit']").click()
 #time.sleep(3)
+
+#与第一个ios app 做对比，除了系统不一样，其他一样，上传成功，对比测试
+system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputState']"))
+system_type.select_by_value("Android")
+# system_type.select_by_value("Android")
+#file_path_ios = r'C:/Users\qianj\Desktop\1.png'
+file_path_ios = os.path.realpath('image/1.png') #link for OS 操作: https://blog.csdn.net/xiongchengluo1129/article/details/79181246
+#print(file_path_ios)
+browser.find_element_by_name("RegisterAppName").send_keys("Test iOS 1")
+uploade_icon_ios_path = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
+uploade_icon_ios_path.send_keys(file_path_ios)
+browser.find_element_by_name("RegisterPackageName").send_keys("Test iOS Package Name 1")
+browser.find_element_by_name("RegisterAppDescription").send_keys("Test iOS App description 1")
+browser.find_element_by_xpath("/html/body//main/div[2]/form[@method='post']//button[@type='submit']").click()
 
 #image using jpg
 file_path_jpg = os.path.realpath('image/3.jpg')
@@ -119,7 +149,7 @@ browser.find_element_by_name("RegisterAppDescription").send_keys("Android to iOS
 time.sleep(2)
 browser.find_element_by_xpath("/html/body//div[@role='alert']/form[@action='/updateedit']/div/div[6]/button[2]").click()
 
-#删除之前注册的iOS 和 Android App
+#删除之前注册的iOS 和 Android App,需要注意的是location
 browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[4]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()
 #time.sleep(5)
 Alert(browser).dismiss()
@@ -129,11 +159,15 @@ browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table
 browser.switch_to.alert.accept()
 print("Delete success")
 
-#browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[5]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()
+#browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[5]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()   注意此处的以及与下一行的区别
 browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[4]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()
 Alert(browser).accept()
 print("Second delete success")
 #time.sleep(5)
+
+browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[4]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()
+Alert(browser).accept()
+print("third delete success")
 
 #upload file
 browser.find_element_by_xpath("//body//main/div[3]/a[@href='/details']/button[@type='button']").click()
