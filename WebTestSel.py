@@ -26,9 +26,11 @@ browser.maximize_window()
 
 browser.find_element_by_name("username").send_keys("junqianniub")
 browser.find_element_by_name("password").send_keys("1019042603QJ")
-#time.sleep(2)
+time.sleep(2)
 browser.find_element_by_xpath("//button[text()='Log in']").click()
-
+print("Test1 --- Log in Successfully")
+print("*" *50)
+time.sleep(2)
 
 system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputState']"))
 system_type.select_by_value("iOS")
@@ -37,12 +39,20 @@ system_type.select_by_value("iOS")
 file_path_ios = os.path.realpath('image/1.png') #link for OS 操作: https://blog.csdn.net/xiongchengluo1129/article/details/79181246
 #print(file_path_ios)
 browser.find_element_by_name("RegisterAppName").send_keys("Test iOS 1")
+time.sleep(2)
 uploade_icon_ios_path = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
+time.sleep(2)
 uploade_icon_ios_path.send_keys(file_path_ios)
+time.sleep(2)
 browser.find_element_by_name("RegisterPackageName").send_keys("Test iOS Package Name 1")
+time.sleep(2)
 browser.find_element_by_name("RegisterAppDescription").send_keys("Test iOS App description 1")
+time.sleep(2)
 browser.find_element_by_xpath("/html/body//main/div[2]/form[@method='post']//button[@type='submit']").click()
-#time.sleep(3)
+time.sleep(3)
+print("Test2 --- Create iOS app successfully")
+print("*" *50)
+time.sleep(2)
 
 #测试如果同样的app name 注册两次会出现一个alert，测试出现并点击接受
 system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputState']"))
@@ -54,9 +64,12 @@ uploade_icon_ios_path = browser.find_element_by_xpath("/html//input[@id='example
 uploade_icon_ios_path.send_keys(file_path_ios)
 browser.find_element_by_name("RegisterPackageName").send_keys("Test iOS Package Name 1")
 browser.find_element_by_name("RegisterAppDescription").send_keys("Test iOS App description 1")
+time.sleep(2)
 browser.find_element_by_xpath("/html/body//main/div[2]/form[@method='post']//button[@type='submit']").click()
 time.sleep(3)
 Alert(browser).accept()
+print("Test3 --- Same app name test pass")
+print("*" *50)
 time.sleep(2)
 
 system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputState']"))
@@ -69,8 +82,12 @@ uploade_icon_Android_path = browser.find_element_by_xpath("/html//input[@id='exa
 uploade_icon_Android_path.send_keys(file_path_Android)
 browser.find_element_by_name("RegisterPackageName").send_keys("Test Android Package Name 1")
 browser.find_element_by_name("RegisterAppDescription").send_keys("Test Android App description 1")
+time.sleep(2)
 browser.find_element_by_xpath("/html/body//main/div[2]/form[@method='post']//button[@type='submit']").click()
-#time.sleep(3)
+time.sleep(3)
+print("Test4 --- Create Android App")
+print("*" *50)
+
 
 #与第一个ios app 做对比，除了系统不一样，其他一样，上传成功，对比测试
 system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputState']"))
@@ -84,11 +101,16 @@ uploade_icon_ios_path = browser.find_element_by_xpath("/html//input[@id='example
 uploade_icon_ios_path.send_keys(file_path_ios)
 browser.find_element_by_name("RegisterPackageName").send_keys("Test iOS Package Name 1")
 browser.find_element_by_name("RegisterAppDescription").send_keys("Test iOS App description 1")
+time.sleep(2)
 browser.find_element_by_xpath("/html/body//main/div[2]/form[@method='post']//button[@type='submit']").click()
+print("Test5 --- Compare Test Pass")
+print("*" *50)
+time.sleep(3)
 
 #image using jpg
 file_path_jpg = os.path.realpath('image/3.jpg')
 uploade_icon_jpg = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
+time.sleep(2)
 uploade_icon_jpg.send_keys(file_path_jpg)
 time.sleep(2)
 #下面两种Alert的使用方法，分别是：
@@ -97,13 +119,19 @@ time.sleep(2)
 #browser.switch_to.alert.accept()
 Alert(browser).accept()
 time.sleep(2)
+print("Test6 --- Test Using jpg file")
+print("*" *50)
 
 #image over 50KB
 file_path_over = os.path.realpath('image/over50.png')
 uploade_icon_over50 = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
+time.sleep(2)
 uploade_icon_over50.send_keys(file_path_over)
 time.sleep(2)
 browser.switch_to.alert.accept()
+time.sleep(2)
+print("Test7 --- Test Using image over 50k")
+print("*" *50)
 
 # 测试点击edit 然后back 功能,再forward 并且测试cancel的功能
 browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[4]/td[7]/form[@action='/editappinfo']//button[@name='editappinfo']").click()
@@ -111,9 +139,10 @@ time.sleep(2)
 browser.back()
 time.sleep(2)
 browser.forward()
-time.sleep(1)
+time.sleep(2)
 browser.find_element_by_xpath("/html/body//div[@role='alert']/form[@action='/updateedit']/div/div[6]/button[1]").click() #cancel
-print("Cancel Successfull")
+print("Test8 --- Test edit; back; forward; cancel successfully ")
+print("*" *50)
 time.sleep(2)
 
 #再次点击目的更换图片并且完成更新功能,并且系统从iOS改成了Android
@@ -129,8 +158,11 @@ browser.find_element_by_name("RegisterPackageName").clear()
 browser.find_element_by_name("RegisterPackageName").send_keys("iOS to Android Test1")
 browser.find_element_by_name("RegisterAppDescription").clear()
 browser.find_element_by_name("RegisterAppDescription").send_keys("iOS to Android Test1 description 1")
-time.sleep(2)
+time.sleep(8)
 browser.find_element_by_xpath("/html/body//div[@role='alert']/form[@action='/updateedit']/div/div[6]/button[2]").click()
+print("Test9 --- Test image change and transfer from ios to android ")
+print("*" *50)
+time.sleep(2)
 #browser.find_element_by_name("updateedit").click()
 
 #Android update transfer to iOS
@@ -146,36 +178,50 @@ browser.find_element_by_name("RegisterPackageName").clear()
 browser.find_element_by_name("RegisterPackageName").send_keys("Android to iOS Test1")
 browser.find_element_by_name("RegisterAppDescription").clear()
 browser.find_element_by_name("RegisterAppDescription").send_keys("Android to iOS Test1 description 1")
-time.sleep(2)
+time.sleep(8)
 browser.find_element_by_xpath("/html/body//div[@role='alert']/form[@action='/updateedit']/div/div[6]/button[2]").click()
+print("Test10 --- Test image change and transfer from Android  to ios ")
+print("*" *50)
+time.sleep(2)
 
 #删除之前注册的iOS 和 Android App,需要注意的是location
 browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[4]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()
 #time.sleep(5)
 Alert(browser).dismiss()
-print("I have already dismiss")
+time.sleep(2)
 browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[4]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()
-#time.sleep(5)
+time.sleep(5)
 browser.switch_to.alert.accept()
-print("Delete success")
+print("Test11 --- Delete success")
+time.sleep(2)
+print("*" *50)
 
 #browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[5]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()   注意此处的以及与下一行的区别
 browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[4]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()
 Alert(browser).accept()
-print("Second delete success")
-#time.sleep(5)
+print("Test12 --- Second delete success")
+time.sleep(5)
+print("*" *50)
 
 browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table-striped']/tbody/tr[4]/td[8]/form[@action='/deleteapp']//button[@name='deletebutton']").click()
 Alert(browser).accept()
-print("third delete success")
+print("Test13 --- third delete success")
+time.sleep(5)
+print("*" *50)
 
 #upload file
 browser.find_element_by_xpath("//body//main/div[3]/a[@href='/details']/button[@type='button']").click()
+time.sleep(2)
 system_type_update_2 = Select(browser.find_element_by_name("AppName"))
 system_type_update_2.select_by_index(1)
-print("done")
+print("Test14 -- upload file test done")
+time.sleep(5)
+print("*" *50)
 browser.back()
+time.sleep(2)
 browser.close()
+print("Test15 -- chrome close successfully")
+print("*" *50)
 
 # 以下代码是对API 进行测试
 """
@@ -184,10 +230,11 @@ https://gist.github.com/lrhache/7686903 from 洪磊
 https://my.oschina.net/u/3204996/blog/1796460
 """
 
-"""
+
 browser = webdriver.Firefox()
 browser.maximize_window()
 browser.get("http://betastore.carloudy.com/approved/?os=android")
+time.sleep(2)
 url_1 = "http://betastore.carloudy.com/approved/?os=android"
 webdata = requests.get(url_1).text
 # print("The webdata is {}:".format(webdata))
@@ -209,11 +256,10 @@ print(dictionary_1)
 for i in range(length_data_1):
     js_1 = 'window.open("' + dictionary_1[i] + '");'
     browser.execute_script(js_1)
-    #time.sleep(2)
     r = requests.get(dictionary_1[i])
     #https://www.jianshu.com/p/ada99b7880a6    这是request 的解释
     #print(type(r)) #<class 'requests.models.Response'>
-    print("Right now the nummber is {}, and the status code is {}!!!!".format(i,r.status_code))
+    print("Right now the nummber is {}, and the status code is {}!!!!".format(i, r.status_code))
     if r.status_code == 200:
         print("In the first API, the image I am print now is {}, and the link is {}:".format(i, data_1[i]))
         print("The image load success\n")
@@ -230,24 +276,27 @@ for i in range(length_data_1):
      #   print(e)
    
 
-print("first one success")
-time.sleep(2)
+time.sleep(3)
+print("Test16 -- first api test success")
+print("*" *50)
 
 
 js='window.open("http://betastore.carloudy.com/approved/?os=ios");'
 browser.execute_script(js)
-time.sleep(2)
-print("second one success")
+time.sleep(3)
+print("Test17 -- second api test success")
+print("*" *50)
 
 js='window.open("http://betastore.carloudy.com/appinfo/?appid=92e4r05x");'
 browser.execute_script(js)
-time.sleep(2)
-print("third one success")
+time.sleep(3)
+print("Test17 -- third api test success")
+print("*" *50)
+
 
 js='window.open("http://betastore.carloudy.com/jsons/?appid=92e4r05x");'
 browser.execute_script(js)
-time.sleep(2)
-print("forth one success")
+time.sleep(3)
 #for link in browser.find_elements_by_tag_name("a"): 这一段还没有很明白
    # if link.text!="":
    #     print(link.text + "")
@@ -273,11 +322,15 @@ browser.execute_script(js_4)
 print("js_4 is :",js_4)
 print(browser.current_url)
 
+print("Test18 -- forth api test success")
+print("*" *50)
+
+
 #browser.get(url_image)
 #browser.get("http://www.google.com")
 #https://www.zhihu.com/ques`tion/43604232
 #https://stackoverrun.com/cn/q/13100729
-"""
+
 
 
 """
