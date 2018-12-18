@@ -19,7 +19,7 @@ from selenium.webdriver.common.alert import Alert
 
 # 这段代码是用Chrome对网站进行测试
 browser = webdriver.Chrome()
-# browser = webdriver.Firefox()
+#browser = webdriver.Firefox()
 browser.implicitly_wait(30)  # 隐性等待，最长等30秒
 browser.get("http://betastore.carloudy.com")
 browser.maximize_window()
@@ -36,7 +36,7 @@ system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputStat
 system_type.select_by_value("iOS")
 # system_type.select_by_value("Android")
 #file_path_ios = r'C:/Users\qianj\Desktop\1.png'
-file_path_ios = os.path.realpath('image/1.png') #link for OS 操作: https://blog.csdn.net/xiongchengluo1129/article/details/79181246
+file_path_ios = os.path.realpath('WebTest/image/1.png') #link for OS 操作: https://blog.csdn.net/xiongchengluo1129/article/details/79181246
 #print(file_path_ios)
 browser.find_element_by_name("RegisterAppName").send_keys("Test iOS 1")
 time.sleep(2)
@@ -57,7 +57,7 @@ time.sleep(2)
 #测试如果同样的app name 注册两次会出现一个alert，测试出现并点击接受
 system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputState']"))
 system_type.select_by_value("iOS")
-file_path_ios = os.path.realpath('image/1.png') #link for OS 操作: https://blog.csdn.net/xiongchengluo1129/article/details/79181246
+file_path_ios = os.path.realpath('WebTest/image/1.png') #link for OS 操作: https://blog.csdn.net/xiongchengluo1129/article/details/79181246
 #print(file_path_ios)
 browser.find_element_by_name("RegisterAppName").send_keys("Test iOS 1")
 uploade_icon_ios_path = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
@@ -76,7 +76,7 @@ system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputStat
 system_type.select_by_value("Android")
 #system_type.select_by_value("Android")
 #file_path_Android = r'C:/Users\qianj\Desktop\2.png' #https://blog.csdn.net/caibaoH/article/details/78335094  uncommon 之后要把/改成\才能继续使用，为了能够成功uncommon
-file_path_Android = os.path.realpath('image/2.png')
+file_path_Android = os.path.realpath('WebTest/image/2.png')
 browser.find_element_by_name("RegisterAppName").send_keys("Test Android 1")
 uploade_icon_Android_path = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
 uploade_icon_Android_path.send_keys(file_path_Android)
@@ -94,7 +94,7 @@ system_type = Select(browser.find_element_by_xpath("/html//select[@id='inputStat
 system_type.select_by_value("Android")
 # system_type.select_by_value("Android")
 #file_path_ios = r'C:/Users\qianj\Desktop\1.png'
-file_path_ios = os.path.realpath('image/1.png') #link for OS 操作: https://blog.csdn.net/xiongchengluo1129/article/details/79181246
+file_path_ios = os.path.realpath('WebTest/image/1.png') #link for OS 操作: https://blog.csdn.net/xiongchengluo1129/article/details/79181246
 #print(file_path_ios)
 browser.find_element_by_name("RegisterAppName").send_keys("Test iOS 1")
 uploade_icon_ios_path = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
@@ -108,7 +108,7 @@ print("*" *50)
 time.sleep(3)
 
 #image using jpg
-file_path_jpg = os.path.realpath('image/3.jpg')
+file_path_jpg = os.path.realpath('WebTest/image/3.jpg')
 uploade_icon_jpg = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
 time.sleep(2)
 uploade_icon_jpg.send_keys(file_path_jpg)
@@ -123,7 +123,7 @@ print("Test6 --- Test Using jpg file")
 print("*" *50)
 
 #image over 50KB
-file_path_over = os.path.realpath('image/over50.png')
+file_path_over = os.path.realpath('WebTest/image/over50.png')
 uploade_icon_over50 = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile2']")
 time.sleep(2)
 uploade_icon_over50.send_keys(file_path_over)
@@ -150,7 +150,7 @@ browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table
 system_type_update_1 = Select(browser.find_element_by_name("OperatingSystem")) #choose operation system
 system_type_update_1.select_by_value("Android") #select
 uploade_icon_update_path_1 = browser.find_element_by_xpath("//input[@id='exampleFormControlFile4']") #select the image
-file_path_update_1 = os.path.realpath('image/4.png')
+file_path_update_1 = os.path.realpath('WebTest/image/4.png')
 uploade_icon_update_path_1.send_keys(file_path_update_1) #upload image
 browser.find_element_by_name("RegisterAppName").clear()  #对之前的文本清理以及输入新的文本
 browser.find_element_by_name("RegisterAppName").send_keys("iOS Transfer to Test Android 1")
@@ -170,7 +170,7 @@ browser.find_element_by_xpath("/html/body//main/div[1]/table[@class='table table
 system_type_update_2 = Select(browser.find_element_by_name("OperatingSystem"))
 system_type_update_2.select_by_value("iOS")
 uploade_icon_update_path_2 = browser.find_element_by_xpath("/html//input[@id='exampleFormControlFile4']")
-file_path_update_2 = os.path.realpath('image/5.png')
+file_path_update_2 = os.path.realpath('WebTest/image/5.png')
 uploade_icon_update_path_2.send_keys(file_path_update_2)
 browser.find_element_by_name("RegisterAppName").clear()  #对之前的文本清理以及输入新的文本
 browser.find_element_by_name("RegisterAppName").send_keys("Android Transfer to Test iOS 1")
